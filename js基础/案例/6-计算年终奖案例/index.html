@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    工龄：<input type="number" value="1" id="workYear"> <br> 月薪：
+    <input type="number" value="14000" id="workMoney"> <br>
+    <button id="submit">计算年终奖</button> <br> 你的年终奖是￥
+    <span id="valBox"></span>
+
+    <!-- import js -->
+    <!-- <script>
+        let workYear = document.getElementById('workYear');
+        let workMoney = document.getElementById('workMoney');
+        let submit = document.getElementById('submit');
+        let valBox = document.getElementById('valBox');
+
+        submit.onclick = function() {
+            // 1.获取文本框中信息
+            let year = workYear.value;
+            let money = workMoney.value;
+            console.log(year);
+            // 2. 经过逻辑处理，得出结果
+            let result = null;
+            if (year < 1) {
+                result = (money >= 8000 ? money * 1.2 : money);
+            } else if (year >= 1 && year < 2) {
+                result = (money >= 10000 ? money * 1.7 : money * 1.5);
+            } else {
+                result = (money >= 12000 ? money * 3.2 : money * 3);
+            }
+            // 3. 把结果赋值给#valBox
+            valBox.innerHTML = result;
+        }
+    </script> -->
+    <script>
+        // 获取对象
+        let workYear = document.getElementById('workYear');
+        let workMoney = document.getElementById('workMoney');
+        let submit = document.getElementById('submit');
+        let valBox = document.getElementById('valBox');
+        //计算结果
+        submit.onclick = function() {
+            let year = workYear.value;
+            let money = workMoney.value;
+            // 2. 经过逻辑处理，得出结果
+            let result = null;
+            if (year < 1) {
+                result = (money >= 8000 ? money * 1.2 : money);
+            } else if (year >= 1 && year < 2) {
+                result = (money >= 10000 ? money * 1.7 : money * 1.5);
+            } else {
+                result = (money >= 12000 ? money * 3.2 : money * 3);
+            }
+            //将结果赋值给valBox
+            valBox.innerHTML = result;
+        }
+    </script>
+</body>
+
+</html>

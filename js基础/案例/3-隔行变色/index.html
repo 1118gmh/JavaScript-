@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    li {
+        list-style: none;
+    }
+    
+    #newBox {
+        margin: 100px auto;
+        padding: 10px;
+        width: 200px;
+        height: 200px;
+        border: 1px solid #ccc;
+    }
+    
+    #newBox li {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        border-bottom: 1px dashed #ccc;
+    }
+    /*
+    实际开发中肯定用css 
+    #newBox li:nth-of-type(even) {
+        background-color: red;
+    }
+    
+    #newBox li:nth-of-type(odd) {
+        background-color: blue;
+    }
+    
+    #newBox li:nth-of-type(n):hover {
+        background-color: lightgreen;
+    } */
+</style>
+
+<body>
+    <ul id="newBox">
+        <li>第1个li</li>
+        <li>第2个li</li>
+        <li>第3个li</li>
+        <li>第4个li</li>
+        <li>第5个li</li>
+    </ul>
+</body>
+<script>
+    //[context].getElementsByTagName([tagname])：在指定范围之内，通过标签名获取一组元素（元素集合HTMLConnection）
+    //=>集合和数组很相似，也是一数字索引作为属性名，
+    let newBox = document.getElementById('newBox');
+    let newList = newBox.getElementsByTagName('li');
+    //1. 实现奇偶行变色
+    /*     for (var i = 0; i < newList.length; i++) {
+            if (i % 2 === 0) {
+                newList[i].style.backgroundColor = 'blue';
+            } else {
+                newList[i].style.backgroundColor = 'red';
+            }
+        } */
+    //用三目运算符代替if/else
+    for (let i = 0; i < newList.length; i++) {
+        newList[i].style.backgroundColor = ((i % 2 === 0) ? ('blue') : ('red'));
+
+        //2. 循环的时候给每个li都绑定mouseover/mouseout事件
+        newList[i].onmouseover = function() {
+            this.style.backgroundColor = 'lightgreen';
+        }
+        newList[i].onmouseout = function() {
+            this.style.backgroundColor = ((i % 2 === 0) ? ('blue') : ('red'));
+        }
+    }
+
+    // console.dir(newList);
+</script>
+
+</html>

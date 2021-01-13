@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            padding: 10px;
+        }
+        
+        .box li {
+            width: 100%;
+            height: 35px;
+            line-height: 50px;
+            text-align: center;
+            border-bottom: 1px dashed #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="box" id="box">
+        <li>我是第1个li</li>
+        <li>我是第2个li</li>
+        <li>我是第3个li</li>
+        <li>我是第4个li</li>
+        <li>我是第5个li</li>
+    </ul>
+    <script>
+        let box = document.getElementById('box');
+        let boxList = box.getElementsByTagName('li');
+        for (var i = 0; i < boxList.length; i++) {
+
+            var bg = (i % 2 === 0) ? 'red' : 'blue';
+            boxList[i].style.backgroundColor = bg;
+            // 设置自定义属性存储获取的背景颜色
+            boxList[i].myOriginbg = bg;
+
+            boxList[i].onmouseover = function() {
+                this.style.backgroundColor = 'lightgreen';
+            }
+            boxList[i].onmouseout = function() {
+                //这里使用之前存的自定义的颜色
+                this.style.backgroundColor = this.myOriginbg;
+            }
+        }
+    </script>
+</body>
+
+</html>

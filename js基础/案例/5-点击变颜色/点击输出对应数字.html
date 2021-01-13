@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>按钮0</button>
+    <button>按钮1</button>
+    <button>按钮2</button>
+    <script>
+        var btnList = document.querySelectorAll('button');
+        for (var i = 0; i < btnList.length; i++) {
+            btnList[i].setAttribute('myindex', i);
+            btnList[i].onclick = function() {
+                alert(this.getAttribute('myindex'));
+            }
+        }
+    </script>
+</body>
+
+</html>

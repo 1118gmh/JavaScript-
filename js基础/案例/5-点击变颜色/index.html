@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body style="background-color: white;">
+    <div class="box" id="box">
+        点击此处变颜色
+    </div>
+    <!-- 选择判断语句实现 -->
+    <!-- <script>
+        let box = document.getElementById('box');
+        let body = document.body;
+        box.onclick = function() {
+            //获取当前颜色
+            let bg = body.style.backgroundColor;
+            switch (bg) {
+                case 'white':
+                    body.style.backgroundColor = 'red';
+                    break;
+                case 'red':
+                    body.style.backgroundColor = 'blue';
+                    break;
+                case 'blue':
+                    body.style.backgroundColor = 'green';
+                    break;
+                default:
+                    body.style.backgroundColor = 'white';
+                    break;
+            }
+        }
+    </script> -->
+    <!-- 数组实现 -->
+    <script>
+        let box = document.getElementById('box');
+        let body = document.body;
+        let i = 0;
+        let ary = ['white', '#ccc', 'red', 'rgb(0,200,150)'];
+        box.onclick = function() {
+            i++;
+            if (i > ary.length - 1) {
+                i = 0;
+            }
+            //i > ary.length - 1?i=0:null
+            body.style.backgroundColor = ary[i];
+
+        }
+    </script>
+</body>
+
+</html>

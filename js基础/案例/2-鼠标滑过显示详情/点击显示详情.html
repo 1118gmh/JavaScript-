@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            position: relative;
+            box-sizing: border-box;
+            margin: 100px auto;
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+        
+        .box .detail {
+            box-sizing: border-box;
+            /* display: none; */
+            position: absolute;
+            top: 48px;
+            right: -1px;
+            width: 500px;
+            height: 300px;
+            border: 1px solid red;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        <span>购物车</span>
+        <div class="detail" id="detail" style="display: none">
+            购物车详情信息
+        </div>
+    </div>
+    <!-- 
+        传统基于操作dom的方式实现业务需求：
+        1. 想操作谁就先获取谁
+        2. 给某元素绑定事件
+        3. 在事件触发的时候修改元素的样式
+     -->
+    <!-- import js -->
+    <!-- <script>
+        // document.getElementById([ID]):在整个文档当中，通过元素的ID获取到当前这个元素对象
+        let box = document.getElementById('box'); //创建一个变量来存储获取的对象
+        let detail = document.getElementById('detail');
+        //元素对象.onxxx=function(){} :事件绑定，xxx事件类型 (操作的是元素的行内样式)
+        box.onclick = function() {
+            //获取某个样式的值：元素.style.xxx （行内样式上获取，如果没有吧样式写在行内上，则无法获取）
+            //1.首先获取detail原有的样式（显示还是隐藏）
+            let n = detail.style.dispaly;
+            if (n === 'none') {
+                detail.style.display = 'block';
+                box.style.borderBottomColor = 'white';
+            } else {
+                detail.style.display = 'none';
+                box.style.borderBottomColor = 'red';
+            }
+
+        }
+    </script> -->
+    <script>
+        let box = document.getElementById('box');
+        let detail = document.getElementById('detail');
+        box.onclick = function() {
+            let n = detail.style.display;
+            if (n === 'none') {
+                detail.style.display = 'block';
+                box.style.borderBottomColor = 'white';
+
+            } else {
+                detail.style.display = 'none';
+                box.style.borderBottomColor = 'red';
+
+            }
+        }
+    </script>
+</body>
+
+</html>

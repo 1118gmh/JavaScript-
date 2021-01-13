@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // /* 
+        //  *bubble：冒泡排序
+        //  *@params
+        //  *   ary []ary数组
+        //  *@return
+        //  *   排序后的新数组
+        //  */
+        // function bubble(ary) {
+        //     let temp = null;
+        //     //外层循环控制比较的轮数
+        //     for (let i = 0; i < ary.length - 1; i++) {
+        //         //内层循环控制每一轮比较的次数
+        //         for (let j = 0; j < ary.length - 1 - i; j++) {
+        //             if (ary[j] > ary[j + 1]) {
+        //                 temp = ary[j];
+        //                 ary[j] = ary[j + 1];
+        //                 ary[j + 1] = temp;
+        //             }
+        //         }
+        //     }
+        //     return ary;
+        // }
+        // let ary = [12, 8, 24, 16, 1];
+        // ary = bubble(ary);
+        // console.log(ary); //[1, 8, 12, 16, 24]
+
+        // /* 
+        //     *handle：插入排序
+        //     *@params
+        //     *   handle []handle数组
+        //     *@return
+        //     *   排序后的新数组
+        //     */
+        // function bubble(ary) {
+        //     let handle = [];
+        //     handle.push(ary[0]);
+        //     for (let i = 1; i <= ary.length - 1; i++) {
+        //         //获取每一次新拿到的牌
+        //         let A = ary[i];
+        //         for (let j = handle.length - 1; j >= 0; j--) {
+        //             //获取每一次要比较的牌
+        //             let B = handle[j];
+        //             //如果大于要比较的牌，则放到要比较的牌的后面（从后往前比）
+        //             if (A > B) {
+        //                 handle.splice(j + 1, 0, A);
+        //                 break;
+        //             }
+        //             //比较到第一张牌还没有时，则直接放到第一张牌的前面
+        //             if (j === 0) {
+        //                 handle.unshift(A);
+        //             }
+        //         }
+
+        //     }
+        //     return handle;
+        // }
+        // let ary = [12, 8, 24, 16, 1];
+        // ary = bubble(ary);
+        // console.log(ary); //[1, 8, 12, 16, 24]
+
+        /* 
+         *quick：快速排序
+         *@params
+         *    []数组
+         *@return
+         *   排序后的新数组
+         */
+        function quick(ary) {
+            //4.结束递归，当其ary小于等于一项，则不用处理
+            if (ary.length <= 1) {
+                return ary;
+            }
+            //1.截取出数组的中间项
+            let middleIndex = Math.floor(ary.length / 2);
+            let middleValue = ary.splice(middleIndex, 1)[0];
+            //2.准备两个空数组，分别存放比中间项小/大的元素
+            let aryLeft = [],
+                aryRight = [];
+            for (let i = 0; i <= ary.length - 1; i++) {
+                ary[i] < middleValue ? aryLeft.push(ary[i]) : aryRight.push(ary[i]);
+            }
+            //3.递归的让两边数组持续这样处理，直到排好序
+            return quick(aryLeft).concat(middleValue, quick(aryRight));
+
+        }
+        let ary = [12, 8, 24, 16, 1];
+        ary = quick(ary);
+        console.log(ary); //[1, 8, 12, 16, 24]
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="codeInp">
+    <br>
+    <span id="codeBox"></span>
+    <button id="changeCode">看不清，换一张</button>
+</body>
+<script>
+    let codeInp = document.getElementById('codeInp'),
+        codeBox = document.getElementById('codeBox'),
+        changeCode = document.getElementById('changeCode');
+    /*
+     *queryCode:生成随机数并且放到盒子里
+     *@params
+     *@return  
+     */
+    function queryCode() {
+        let str = 'ABCDEFGHIGKLMNOPQRSTUNWXYZabcdifghijklmnopqrstunwxyz1234567890';
+        let result = '';
+        for (let i = 0; i < 4; i++) {
+            let c = str.charAt(Math.random() * 61);
+            result += c;
+        }
+        codeBox.innerHTML = result;
+    }
+    //加载代码时生成一次随机数
+    queryCode();
+    //点击changeCode按钮，重新获取随机数
+    changeCode.onclick = queryCode;
+    //验证
+    codeInp.onblur = function() {
+        if (codeInp.innerHTML.toLowerCase() === codeBox.innerHTML.toLowerCase) {
+            alert('验证码正确');
+        } else {
+            alert('验证码错误，请重新输入');
+            codeInp.value = '';
+            queryCode();
+
+        }
+    }
+</script>
+
+</html>

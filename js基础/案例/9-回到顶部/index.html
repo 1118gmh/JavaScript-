@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>回到顶部</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 1000%;
+            background: -webkit-linear-gradient(top left, lightyellow, yellow, lightgreen, green, lightpink, pink);
+        }
+        
+        .box {
+            display: none;
+            position: fixed;
+            right: 70px;
+            bottom: 70px;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 5px solid #ccc;
+            background-color: black;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+        回到顶部
+    </div>
+    <script>
+        let HTML = document.documentElement,
+            box = document.querySelector('#box');
+        //滚动时验证
+        function check() {
+            box.style.display = HTML.scrollTop >= HTML.clientHeight * 2 ? 'block' : 'none';
+        }
+        window.onscroll = check;
+        //点击回到顶部
+        box.onclick = function() {
+            //按钮隐藏,并且暂时让滚动事件无效
+            box.style.display = 'none';
+            window.onscroll = null;
+
+
+            //实现动画
+            let step = 1000;
+            let timer = setInterval(() => {
+                //每一次获取最新的scroll-top值，在现有的基础上减去步长，让其走一步
+                let cruT = HTML.scrollTop;
+                if (curT === 0) {
+                    //边界判断：已经回到顶部后，清除定时器
+                    clearInterval(timer);
+                    window.onscroll = check;
+                    return;
+                }
+                curT -= step;
+                HTML.scrollTop = curT;
+            }, 17);
+        };
+    </script>
+</body>
+
+</html>

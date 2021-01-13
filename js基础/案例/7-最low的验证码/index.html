@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="codeInp">
+    <br>
+    <span id="codeBox"></span>
+    <button id="changeCode">看不清换一张</button>
+    <script>
+        let codeInp = document.getElementById('codeInp'),
+            codeBox = document.getElementById('codeBox');
+        changeCode = document.getElementById('changeCode');
+
+        /* 
+         *queryCode：获取四位随机的验证码，然后放到盒子里
+         *@params
+         *@return
+         *by gaominghui on 2020/09/02
+         */
+        function queryCode() {
+            //准备获取范围的字符串
+            let area = 'ABCDEFGHIGKLMNOPQRSTUNWXYZabcdifghijklmnopqrstunwxyz1234567890';
+            let result = '';
+            for (let i = 0; i < 4; i++) {
+                let randomIndex = Math.random() * 61;
+                result += area.charAt(randomIndex);
+            }
+            //放到盒子里
+            codeBox.innerHTML = result;
+        }
+        //第一次加载页面需要执行方法，让其显示在页面中
+        queryCode();
+
+        //点击看不清按钮，需要重新获取新的验证码
+        changeCode.onclick = queryCode;
+
+        //文本框失去焦点时，验证用户输入的验证码是否相同，给与相关提示，如果不一样需要重新生成验证码
+        //文本框失去焦点事件
+        codeInp.onblur = function() {
+            //获取用户和验证码内容：表单元素用value，非表单元素用innerHTML
+            let val = codeInp.value,
+                code = codeBox.innerHTML;
+            //不区分大小写验证：都转换为小写
+            if (val.toLowerCase() === code.toLowerCase()) {
+                alert('温馨提示：验证码输入成功');
+            } else {
+                alert('温馨提示：验证码错误，请重试');
+                codeInp.value = '';
+                queryCode();
+            }
+        }
+    </script>
+</body>
+
+</html>

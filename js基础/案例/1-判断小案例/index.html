@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        button,
+        input {
+            font-family: 'Microsoft YaHei', 'Heiti SC', tahoma, arial, 'Hiragino Sans GB', \\5B8B\4F53, sans-serif;
+            /*取消轮廓线 蓝色的*/
+            border: none;
+            outline: none;
+        }
+        
+        .box {
+            width: 280px;
+            height: 30px;
+            margin: 100px auto;
+        }
+        
+        .box input[type="text"] {
+            float: left;
+            width: 200px;
+            height: 30px;
+            padding-left: 10px;
+            border: 1px solid blue;
+        }
+        
+        .box button {
+            float: right;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border: 1px solid blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" id="text" placeholder="输入内容">
+        <button id="button">点击计算</button>
+    </div>
+</body>
+<script>
+    let text = document.getElementById('text');
+    let button = document.getElementById('button');
+    button.onclick = function() {
+        let v = text.value;
+        if (!isNaN(v)) {
+            if (v > 0) {
+                console.log("正数");
+            } else if (v < 0) {
+                console.log("负数");
+            } else {
+                console.log("零");
+            }
+
+        } else {
+            console.log("非有效数字");
+        }
+    }
+</script>
+
+</html>
