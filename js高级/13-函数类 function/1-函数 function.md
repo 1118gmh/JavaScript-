@@ -295,7 +295,7 @@ sum(1,2,3,4); //=>[1, 2, 3, 4]
       for(let i = 1;i < arguments.length;i++){
           args.push('arguments['+i+']');
       }
-      let r = eval('context.fn('+args+')');
+      let r = eval(`context.fn(`+args+`)`);;
       delete context.fn;
       return r;
   }

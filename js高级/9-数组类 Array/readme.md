@@ -439,7 +439,6 @@ ary.length = ary.length-1;
       return prev + next;
   });
   console.log(res);
-  
   //自己写的myReduce
   Array.prototype.myReduce = function(fn,prev){
       for(let i = 0;i <this.length;i++){
