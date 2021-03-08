@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #myList {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            border: 1px solid green;
+            padding: 5px;
+            position: absolute;
+            left: 500px;
+            top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="myList">
+
+    </div>
+    <script>
+        var myList = document.getElementById("myList");
+        console.log(getBoundingClientRect(myList));
+
+        function getBoundingClientRect(element) {
+            var left = getElementLeft(element);
+            var top = getElementTop(element);
+            return {
+                left: left - element.scrollLeft,
+                top: top - element.scrollTop,
+                right: left + element.offsetWidth - element.scrollLeft,
+                bottom: top + element.offsetHeight - element.scrollTop,
+                x: left - element.scrollLeft,
+                y: top - element.scrollTop,
+                width: element.offsetWidth,
+                height: element.offsetHeight
+            };
+        }
+
+        function getElementLeft(element) {
+            var left = element.offsetLeft;
+            var parent = element.offsetParent;
+            while (parent) {
+                left += parent.offsetLeft;
+                parent = parent.offsetParent;
+            }
+            return left;
+        }
+
+        function getElementTop(element) {
+            var top = element.offsetTop;
+            var parent = element.offsetParent;
+            while (parent) {
+                top += parent.offsetTop;
+                parent = parent.offsetParent;
+            }
+            return top;
+        }
+    </script>
+</body>
+
+</html>

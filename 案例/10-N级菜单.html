@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>N级菜单</title>
+    <style>
+        #menu {
+            width: 400px;
+            background: burlywood;
+        }
+        
+        #menu span {
+            display: block;
+            cursor: pointer;
+        }
+        
+        #menu span.close::before {
+            content: "[+]";
+        }
+        
+        #menu span.open::before {
+            content: "[-]";
+        }
+        
+        ul li {
+            list-style: none;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        span ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="menu">
+        <li>
+            <span>一</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li><span>6</span>
+                    <ul>
+                        <li>(1)</li>
+                        <li>(2)</li>
+                        <li>(3)</li>
+                        <li>(4)</li>
+                        <li>(5)</li>
+                        <li>(6)</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><span>二</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </li>
+        <li><span>三</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </li>
+        <li><span>四</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </li>
+        <li><span>五</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </li>
+        <li><span>六</span>
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+            </ul>
+        </li>
+    </ul>
+    <script>
+        var oSpans = document.getElementById("menu").getElementsByTagName("span");
+        for (var i = 0; i < oSpans.length; i++) {
+            var oSpan = oSpans[i];
+            var oUl = getNext(oSpan);
+            if (oUl && oUl.nodeName === "UL") {
+                oUl.style.display = "none";
+                oSpan.style.backgroundColor = "orange";
+                oSpan.className = "close";
+
+            } else {
+                oSpan.style.backgroundColor = "#CCC";
+            }
+        }
+        document.getElementById("menu").onclick = function(event) {
+            event = event || window.event;
+            var target = event.target || event.srcElement;
+            if (target.nodeName === "SPAN") {
+                var oUl = getNext(target);
+                if (oUl && oUl.nodeName === "UL") {
+                    if (oUl.style.display === "none") {
+                        oUl.style.display = "block";
+                        target.className = "open";
+                    } else {
+                        oUl.style.display = "none";
+                        target.className = "close";
+                    }
+                }
+            }
+        };
+        //下一个弟弟节点，第一个弟弟节点；
+        function getNext(curEle) {
+            if ("getElementsByClassName" in window) {
+                return curEle.nextElementSibling;
+            }
+            var next = curEle.nextSibling;
+            while (next && next.nodeType !== 1) {
+                next = next.nextSibling;
+            }
+            return next;
+        };
+        //上一个哥哥节点；
+        function getPre(curEle) {
+            if ("getElementsByClassName" in window) {
+                return curEle.previousElementSibling;
+            }
+            var pre = curEle.previousSibling;
+            while (pre && pre.nodeType !== 1) {
+                pre = pre.previousSibling;
+            }
+            return pre;
+        }
+    </script>
+</body>
+
+</html>

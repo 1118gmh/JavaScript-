@@ -1,0 +1,131 @@
+/*
+ *baseCss是清空默认样式的
+ *common中存放的是公用的变量或方法
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+em,
+i {
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+img {
+  border: 0;
+  vertical-align: middle;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+a:hover {
+  color: #e33333;
+}
+button,
+input {
+  font-family: 'Microsoft YaHei', 'Heiti SC', tahoma, arial, 'Hiragino Sans GB', \\5B8B\4F53, sans-serif;
+  border: 0;
+  outline: 0;
+}
+body {
+  background-color: #fff;
+  font: 12px/1.5 'Microsoft YaHei', 'Heiti SC', tahoma, arial, 'Hiragino Sans GB', \\5B8B\4F53, sans-serif;
+  color: #666;
+}
+.hide,
+.none {
+  display: none;
+}
+.clearfix:after {
+  visibility: hidden;
+  clear: both;
+  display: block;
+  content: ".";
+  height: 0;
+}
+.clearfix {
+  *zoom: 1;
+}
+html,
+body {
+  background: #F4F4F4;
+  overflow-x: hidden;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+.headerBox {
+  height: 50px;
+  line-height: 50px;
+  background: white;
+  margin: 20px 0;
+}
+.headerBox span {
+  display: inline-block;
+  height: 50px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+.headerBox a {
+  display: inline-block;
+  padding: 0 15px;
+  height: 50px;
+  font-size: 14px;
+}
+.headerBox a:hover {
+  color: #E01D20;
+}
+.productBox {
+  overflow: hidden;
+}
+.productBox li {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: white;
+  width: 232px;
+  height: 352px;
+}
+.productBox li:nth-child(5n) {
+  margin-right: 0;
+}
+.productBox li a {
+  display: block;
+  padding: 0 16px;
+  border: 3px solid transparent;
+}
+.productBox li a img {
+  display: block;
+  width: 100%;
+}
+.productBox li a p {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  height: 40px;
+  line-height: 20px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.productBox li a span {
+  display: block;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.productBox li a span:first-of-type {
+  color: #E01D20;
+}
+.productBox li:hover {
+  box-shadow: 1px 10px 10px #ccc;
+}

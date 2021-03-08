@@ -1,0 +1,60 @@
+[{
+    "id": 1,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 7777,
+    "time": "2017-04-15",
+    "img": "img/1.png",
+    "hot": 45
+}, {
+    "id": 2,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 2222,
+    "time": "2017-05-15",
+    "img": "img/1.png",
+
+    "hot": 46
+}, {
+    "id": 3,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 4466,
+    "time": "2017-03-15",
+    "img": "img/1.png",
+
+    "hot": 66
+}, {
+    "id": 4,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 9087,
+    "time": "2017-01-15",
+    "img": "img/1.png",
+
+    "hot": 99
+}, {
+    "id": 5,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 3546,
+    "time": "2017-03-15",
+    "img": "img/1.png",
+    "hot": 450
+}, {
+    "id": 6,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 1234,
+    "time": "2018-03-15",
+    "img": "img/1.png",
+    "hot": 4
+}, {
+    "id": 7,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 4567,
+    "time": "2016-03-15",
+    "img": "img/1.png",
+    "hot": 457
+}, {
+    "id": 8,
+    "title": "HUAWEI MATE 10 4G+64GB",
+    "price": 2433,
+    "time": "2013-03-15",
+    "img": "img/1.png",
+    "hot": 499
+}]

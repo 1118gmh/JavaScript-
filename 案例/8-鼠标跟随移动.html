@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标跟随移动</title>
+    <style>
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background: orange;
+            color: orangered;
+            line-height: 200px;
+            text-align: center;
+        }
+        
+        #newDiv {
+            width: 400px;
+            height: 400px;
+            background: red;
+            position: absolute;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="div1">
+    </div>
+
+    <script>
+        var oDiv = document.getElementById("div1");
+        var flag = 1;
+
+        oDiv.addEventListener("mouseover", function(event) {
+            if (flag) {
+                var event = event || window.event;
+                var newDiv = document.createElement("div");
+                newDiv.id = "newDiv";
+                newDiv.innerHTML = "hahahahahahahah";
+                newDiv.style.left = event.clientX + "px";
+                newDiv.style.top = event.clientY + "px";
+                document.body.appendChild(newDiv);
+                flag = 0;
+            }
+
+        });
+        oDiv.addEventListener("mousemove", function(event) {
+            var event = event || window.event;
+            var newDiv = document.getElementById("newDiv");
+            newDiv.style.left = event.clientX + 10 + "px";
+            newDiv.style.top = event.clientY + 20 + "px";
+
+        });
+        oDiv.addEventListener("mouseout", function(event) {
+            document.body.removeChild(newDiv);
+            flag = 1
+        });
+    </script>
+</body>
+
+</html>

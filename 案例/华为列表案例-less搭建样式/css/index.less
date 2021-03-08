@@ -1,0 +1,88 @@
+/*
+ *baseCss是清空默认样式的
+ *common中存放的是公用的变量或方法
+ *最好全部都是.less结尾，这样可以一起合并压缩到一个文件
+ */
+
+@import "baseCss";
+@import (reference) "common";
+html,body{
+    background: #F4F4F4;
+    overflow-x: hidden;
+}
+.container{
+    width: 1200px;
+    margin: 0 auto;
+}
+.headerBox{
+    @H:50px;
+    @F:14px;
+
+    height: @H;
+    line-height: @H;
+    background: @con-bg;
+    margin: 20px 0;
+    span{
+        display: inline-block;//使用inline-block会把标签之间的空格和换行当做元素占位，导致元素之间有间隙。解决：给父元素加font-size:0;
+        height: @H;
+        padding: 0 20px;
+        font-size: @F;
+    }
+    a{
+        display: inline-block;
+        padding: 0 15px;
+        height: @H;    
+        font-size: @F;
+        &:hover{
+            color: @text-active;
+        }
+    }
+}
+.productBox{
+    overflow: hidden;
+    li{
+        float: left;//子元素浮动，高度不能撑开父元素。解决：清除子元素对父元素的影响=>clear:both;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: @con-bg;
+        width: 232px;
+        height: 352px;
+        &:nth-child(5n){//5个位一组，每组中的第5个
+            margin-right:0;
+        }
+        a{
+            display: block;
+            padding: 0 16px;
+            border: 3px solid transparent;
+            img{
+                display: block;
+                width: 100%;
+            }
+            p{
+                display: block;
+                font-size: 12px;
+                color: @text-gray;
+                height: 40px;
+                line-height: 20px;
+                overflow: hidden;
+                margin: 8px 0;
+            }
+            span{
+                display: block;
+                height: 20px;
+                line-height: 20px;
+                font-size: 14px;
+                margin-top: 5px;
+                &:first-of-type{
+                    color: @text-active;
+                }
+            }
+        
+
+        }
+        &:hover{
+            box-shadow: 1px 10px 10px #ccc;
+        }
+    }
+}

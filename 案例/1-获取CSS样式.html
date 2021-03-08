@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="myList" style="width: 100px;height: 100px;background-color: #CDE074;border: 1px dashed darkcyan;"></div>
+    <script>
+        var div = document.getElementById("myList");
+        //一般浏览器获取方式
+        var targetObj1 = window.getComputedStyle(div, null);
+        console.log(targetObj1);
+        //低版本IE获取CSS样式方法
+        var targetObj2 = div.currentStyle;
+        console.log(targetObj2);
+        //兼容写法(测试)
+        var targetObj3 = getCSS(div, "width");
+        console.log(targetObj3);
+        console.log(getCSS2(div, "width"));
+        //兼容写法1
+        function getCSS(ele, value) {
+            if (window.getComputedStyle) {
+                return window.getComputedStyle(ele)[value];
+            } else {
+                return ele.currentStyle[value];
+            }
+        }
+        //兼容写法2
+        function getCSS2(ele, value) {
+            try {
+                return window.getComputedStyle(ele, null)[value];
+            } catch (error) {
+                return ele.currentStyle[value];
+            }
+        }
+    </script>
+</body>
+
+</html>

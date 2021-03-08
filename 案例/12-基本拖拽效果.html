@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>基本的拖拽效果</title>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">拖拽效果</div>
+</body>
+
+</html>
+<script>
+    var oDiv = document.getElementById("div1");
+    oDiv.onmousedown = down;
+
+    function down(e) {
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+        if (this.setCapture) {
+            //捕捉鼠标焦点；（IE解决方法）
+            this.setCapture();
+            //将鼠标移动和松开绑定到move和up
+            this.onmousemove = move;
+            this.onmouseup = up;
+        } else {
+            var _this = this;
+            var _move = bindThis(_this, move)
+            var _up = bindThis(_this, up);
+            document.onmousemove = _move;
+            document.onmouseup = _up;
+        }
+    }
+    //绑定this
+    function bindThis(obj, fn) {
+        return function(e) {
+            fn.call(obj, e);
+        };
+    }
+
+    function move(e) {
+        this.style.top = (this.y + e.clientY - this.mouseY) + "px";
+        this.style.left = (this.x + e.clientX - this.mouseX) + "px";
+    }
+
+    function up(e) {
+        if (this.releaseCapture) {
+            this.releaseCapture();
+            this.onmousemove = null;
+            this.onmouseup = null;
+        } else {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+</script>

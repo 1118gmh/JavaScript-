@@ -1,0 +1,53 @@
+/* 准备一张大图和一张小图 */
+
+
+/* mark/smallBox = bigBox/bigImg */
+
+.magnigierBox {
+    position: relative;
+    margin: 20px 300px;
+    width: 600px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.magnigierBox .smallBox,
+.magnigierBox .bigBox {
+    float: left;
+    width: 300px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.magnigierBox .smallBox img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.magnigierBox .smallBox .mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    width: 100px;
+    height: 100px;
+    background-color: #E01D20;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    cursor: move;
+}
+
+.magnigierBox .bigBox {
+    position: relative;
+    display: none;
+}
+
+.magnigierBox .bigBox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+}

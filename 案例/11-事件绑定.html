@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <script>
+        function bind(ele, type, fn) {
+            if (ele.addEventListener) {
+                ele.addEventListener(type, fn);
+            } else {
+                var fnTemp = function() {
+                    fn.call(ele)
+                }; //解决fn的this关键字
+                if (!ele["myBind" + type]) {
+                    ele["myBind" + type] = [];
+                }
+                var oBind = ele["myBind" + type];
+                for (var i = 0; i < oBind.length; i++) { //防止重复绑定的；
+                    if (oBind[i].flag == fn) {
+                        return;
+                    }
+                }
+                oBind.push(fnTemp);
+                fnTemp.flag = fn;
+                ele.attachEvent("on" + type, fnTemp);
+            }
+        }
+
+        function unbind(ele, type, fn) {
+            if (ele.removeEventListener) {
+                ele.removeEventListener(type, fn);
+            } else {
+                var oBind = ele["myBind" + type];
+                if (oBind && oBind.length) {
+                    for (var i = 0; i < oBind.length; i++) {
+                        if (oBind.flag === fn) {
+                            ele.detach("on" + type, oBind[i]);
+                            oBind.splice(i, 1);
+                            return;
+                        }
+                    }
+                }
+            }
+
+        }
+        var oDiv = document.getElementById("div1");
+
+        /*下面是解决一个元素同一类似事件的执行顺序*/
+        function on(ele, type, fn) {
+            if (!ele["aEvent" + type]) {
+                ele["aEvent" + type] = [];
+            }
+            var aryEvent = ele["aEvent" + type];
+            for (var i = 0; i < aryEvent.length; i++) { //防止同一个方法被同事件绑定；
+                if (aryEvent[i] == fn) return;
+            }
+            aryEvent.push(fn);
+            bind(ele, type, run); //只会执行一次
+        }
+
+        function off(ele, type, fn) {
+            if (ele["aEvent" + type]) {
+                var anyEvent = ele["aEvent" + type];
+                for (var i = 0; i < anyEvent.length; i++) {
+                    if (anyEvent[i] === fn) {
+                        anyEvent[i] = null;
+                        return;
+                    }
+                }
+            }
+        }
+
+        //事件兼容问题都在run上解决
+        function run(e) {
+            e = e || window.event;
+            if (!e.target) {
+                e.target = e.srcElement;
+                e.pageX = (document.documentElement.scrollLeft || document.body.scrollLeft) + e.clientX;
+                e.pageY = (document.documentElement.scrollTop || document.body.scrollTop) + e.clientY;
+                e.stopPropagation = function() {
+                        e.cancelBubble = true;
+                    } //阻止事件传播;
+                e.preventDefault = function() {
+                        e.returnValue = false;
+                    } //阻止事件默认行为;
+            }
+            /*上面是IE不支持的*/
+            var a = this["aEvent" + e.type];
+            for (var i = 0; i < a.length; i++) {
+                /*下面是防止数组塌陷的*/
+                if (typeof a[i] == "function") {
+                    //a[i].call(this);//this指向当前被绑定元素；
+                    a[i].call(this, e); //this后面加e；就解决了e的兼容性问题；因为想this主体传了e；具体的函数就不需要再解决e的兼容了；
+                } else {
+                    /*如果是空的，删掉；不删也是可以的*/
+                    a.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        on(oDiv, "click", fn1);
+        on(oDiv, "click", fn2);
+        on(oDiv, "click", fn3);
+        on(oDiv, "click", fn4);
+        on(oDiv, "click", fn5);
+        on(oDiv, "click", fn6);
+        on(oDiv, "click", fn7);
+        on(oDiv, "click", fn8);
+        on(oDiv, "click", fn9);
+        on(oDiv, "click", fn10);
+
+        function fn1() {
+            console.log("执行函数fn1")
+        }
+
+        function fn2() {
+            console.log("执行函数fn2")
+        }
+
+        function fn3() {
+            console.log("执行函数fn3")
+        }
+
+        function fn4() {
+            console.log("执行函数fn4")
+        }
+
+        function fn5() {
+            console.log("执行函数fn5")
+        }
+
+        function fn6() {
+            console.log("执行函数fn6")
+        }
+
+        function fn7() {
+            console.log("执行函数fn7")
+        }
+
+        function fn8() {
+            console.log("执行函数fn8")
+        }
+
+        function fn9() {
+            console.log("执行函数fn9")
+        }
+
+        function fn10() {
+            console.log("执行函数fn10")
+        }
+    </script>
+    </script>
+</body>
+
+</html>

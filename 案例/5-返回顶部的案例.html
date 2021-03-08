@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>返回顶部的案例</title>
+    <style>
+        body,
+        div {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 1000%;
+        }
+        
+        #div1 {
+            display: none;
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            width: 100px;
+            height: 50px;
+            background: blue;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        返回顶部
+    </div>
+    <script>
+        //获取window下的元素属性
+        function getWin(attr) {
+            return document.documentElement[attr] || document.body[attr];
+        }
+        var cT = getWin("clientHeight"),
+            oDiv = document.getElementById("div1");
+        window.addEventListener("scroll", function() {
+            var sT = getWin("scrollTop");
+            if (sT >= cT) {
+                oDiv.style.display = "block";
+
+            } else {
+                oDiv.style.display = "none";
+            }
+        });
+        oDiv.addEventListener("click", move);
+
+        function move() {
+            oDiv.style.display = "none";
+            window.clearTimeout(this.timer);
+            oDiv.timer = null;
+            document.documentElement.scrollTop -= 300;
+            if ((document.documentElement.scrollTop - 300) <= 0) {
+                document.documentElement.scrollTop = 0;
+                return;
+            }
+            oDiv.timer = window.setTimeout(move, 10);
+        }
+    </script>
+</body>
+
+</html>

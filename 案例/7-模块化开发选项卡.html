@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>模块化开发选项卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        .tabModel {
+            width: 600px;
+            height: 500px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin: 10px auto;
+            padding: 5px;
+        }
+        
+        .tabHeads {
+            position: relative;
+            top: 1px;
+        }
+        
+        .tabHeads li {
+            float: left;
+            margin-right: 10px;
+            width: 60px;
+            height: 30px;
+            background: #41e2b2;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #cccccc;
+            cursor: pointer;
+        }
+        
+        .tabContents div {
+            display: none;
+            width: 100%;
+            height: 455px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            background: #41c2e2;
+            clear: both;
+        }
+        
+        .selectTabHead {
+            background: #000000;
+            color: #FFFFFF;
+        }
+        
+        .tabContents .selectTabContent {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tabModel">
+        <ul class="tabHeads " id="tabHeads">
+            <li class="selectTabHead">选项1</li>
+            <li>选项2</li>
+            <li>选项3</li>
+            <li>选项4</li>
+            <li>选项5</li>
+        </ul>
+        <div class="tabContents" id="tabContents">
+            <div class="selectTabContent">内容1</div>
+            <div>内容2</div>
+            <div>内容3</div>
+            <div>内容4</div>
+            <div>内容5</div>
+        </div>
+    </div>
+    <script src="../js高级/18-封装的utils库/封装Tool库源码.js"></script>
+    <script>
+        var t = new Tool();
+        var tabHeads = document.getElementById("tabHeads"),
+            oLis = tabHeads.getElementsByTagName("li"),
+            tabContents = document.getElementById("tabContents"),
+            oDivs = tabContents.getElementsByTagName("div");
+        for (var i = 0; i < oLis.length; i++) {
+            oLis[i].onclick = tabChange;
+        }
+
+        function tabChange() {
+            var n = t.getIndex(this);
+            var siblings = t.getSiblings(this);
+            for (var i = 0; i < siblings.length; i++) {
+                t.removeClassName(siblings[i], "selectTabHead");
+            }
+            //var parent = this.parentNode;
+            //var next = t.getNext(parent);
+            //var contents = t.getEleChildren(next, "div");
+            for (var i = 0; i < oDivs.length; i++) {
+                t.removeClassName(oDivs[i], "selectTabContent");
+            }
+            t.addClassName(this, "selectTabHead");
+            t.addClassName(oDivs[n], "selectTabContent");
+        }
+    </script>
+</body>
+
+</html>

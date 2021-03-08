@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标放大镜左侧购物商品</title>
+    <style>
+        #div1 {
+            width: 400px;
+            height: 400px;
+            background: orange;
+        }
+        
+        #newDiv {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1"></div>
+    <script>
+        var oDiv = document.getElementById("div1");
+        oDiv.addEventListener("mouseenter", function(event) {
+            var event = event || window.event;
+            var newDiv = document.createElement("div");
+            newDiv.id = "newDiv";
+            this.appendChild(newDiv); //添加到div1盒子中去，而不是document.body
+            setMark(newDiv, event);
+
+        });
+        oDiv.addEventListener("mousemove", function(event) {
+            var event = event || window.event;
+            var newDiv = document.getElementById("newDiv");
+            if (newDiv) {
+                setMark(newDiv, event);
+            }
+        });
+        oDiv.onmouseleave = function(event) {
+            var newDiv = document.getElementById("newDiv");
+            if (newDiv) {
+                newDiv.parentNode.removeChild(newDiv);
+            }
+        };
+
+        function setMark(newDiv, event) {
+            //绑定事件标配
+            event = event || window.event;
+            //获取mark这个div的宽度和高度；并且让mark这个div显示在鼠标的正中间
+            newDiv.style.left = event.clientX - newDiv.offsetWidth / 2 + "px";
+            newDiv.style.top = event.clientY - newDiv.offsetHeight / 2 + "px";
+            //判断边界
+            var l = event.clientX - newDiv.offsetWidth / 2 - oDiv.offsetLeft;
+            var t = event.clientY - newDiv.offsetHeight / 2 - oDiv.offsetTop;
+            //判断是否超出左边界和有边界
+            if (l <= 0) {
+                newDiv.style.left = oDiv.offsetLeft + "px";
+            } else if (l > (oDiv.offsetWidth - newDiv.offsetWidth)) {
+                newDiv.style.left = oDiv.offsetLeft + oDiv.offsetWidth - newDiv.offsetWidth + "px";
+
+            }
+            //判断是否超出上边界和下边界
+            if (t <= 0) {
+                newDiv.style.top = oDiv.offsetTop + "px";
+
+            } else if (t > (oDiv.offsetHeight - newDiv.offsetHeight)) {
+                newDiv.style.top = oDiv.offsetTop + oDiv.offsetHeight - newDiv.offsetHeight + "px";
+            }
+        }
+    </script>
+</body>
+
+</html>

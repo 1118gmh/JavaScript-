@@ -1,0 +1,22 @@
+### DOM2事件绑定
+
+总结：
+
+1. 方法不同,一个是（addEventListener/removeEventListener），IE是（attachEvent/detachEvent）
+2. IE里被绑定上的方法，this关键字指向window；
+3. IE里执行的顺序是混乱的
+4. IE里的方法是可以被重复绑定的；
+5. 事件对象本身，IE是全局的时间对象window.event；其他的是系统自动传的
+6. 事件源：标准浏览器是e.target；IE是srcElement;
+7. 阻止事件的默认行为：标准浏览器是e.preventDefault(),IE是returnValue=false；
+8. 在所有浏览器中，如果用DOM0的方式来绑定，方法里面用return false也可以阻止默认行为的；这个是可以阻止DOM0的，如果是DOM2级的就不可以了
+9. 阻止事件的传播：标准浏览器是e.stopPropagation();IE是cancelBubble=true;`
+10. e.pageX,e.pageY，这两个属性IE不支持；
+11. IE不支持捕获，只能支持冒泡；所以标准浏览器绑定和解绑第三个参数是false，第三个参数不写，也是没问题的；
+
+> 兼容性解决this关键字
+
+```html
+
+```
+

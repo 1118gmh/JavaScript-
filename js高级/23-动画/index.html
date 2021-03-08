@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>动画</title>
+    <link rel="stylesheet" href="css/baseCss.css">
+    <style>
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script src="js/jQuery.js"></script>
+    <!-- <script src="animate.js"></script> -->
+    <script>
+        let $box = $('.box');
+        $box.animate({
+            top: 500,
+            left: 500
+        }, 5000, 'linear', () => {
+            $box.css({
+                background: 'blue'
+            });
+        });
+    </script>
+    <!-- <script src="js/2多方向匀速运动.js"> -->
+    </script>
+</body>
+
+</html>

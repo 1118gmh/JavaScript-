@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>日历控件</title>
+    <style>
+        body {
+            -webkit-user-select: none;
+        }
+        
+        #calendar {
+            width: 200px;
+            padding: 5px;
+            background: orange;
+            position: absolute;
+            z-index: 100;
+        }
+        
+        #calendar h6 {
+            font-size: 16px;
+            background: blue;
+            color: white;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        #calendar h6 span {
+            width: 35px;
+            height: 30px;
+            position: absolute;
+            top: 0;
+        }
+        
+        #calendar h6 span.prev {
+            left: 0;
+            background: #000000;
+        }
+        
+        #calendar h6 span.next {
+            right: 0;
+            background: #000000;
+        }
+        
+        #calendar ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+        
+        #calendar ul li {
+            float: left;
+            width: 26px;
+            height: 26px;
+            background: rgb(37, 161, 124);
+            ;
+            line-height: 26px;
+            text-align: center;
+            border: 1px solid #cccccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" value="" onfocus="createCalendar(this)">
+    <div style="width: 200px;height: 200px; background: #CCC;"></div>
+
+</body>
+<script>
+    function createCalendar(ele) {
+        var obj = offset(ele);
+        var x = obj.left;
+        var y = obj.top + ele.offsetHeight + 5;
+        if (!document.getElementById("calendar")) {
+            var calendar = document.createElement("div");
+            calendar.id = "calendar";
+            calendar.style.left = x + "px";
+            calendar.style.top = y + "px";
+            var h6 = document.createElement("h6");
+            var prev = document.createElement("span");
+            var title = document.createElement("div");
+            var next = document.createElement("span");
+            prev.className = "prev";
+            next.className = "next";
+            prev.innerHTML = "上";
+            next.innerHTML = "下";
+            calendar.appendChild(h6);
+            h6.appendChild(prev);
+            h6.appendChild(title);
+            h6.appendChild(next);
+            document.body.appendChild(calendar);
+
+            // //如果需要鼠标离开日历界面(失去焦点事件)
+            // ele.onblur = function() {
+            //     document.body.removeChild(calendar);
+            //     calendar = null;
+            // };
+
+            oUl = document.createElement("ul");
+            var currentDate = new Date;
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth();
+            prev.onclick = function() {
+                active(--currentMonth);
+            };
+            next.onclick = function() {
+                active(++currentMonth);
+            };
+            active(currentMonth);
+            calendar.appendChild(oUl);
+        }
+
+        function active(m) {
+            oUl.innerHTML = "";
+            var activeDate = new Date(currentYear, m); //活动日期，不断改变
+            activeDate.setDate(1); //设置活动日期为1号
+            var diff = 1 - activeDate.getDay(); //获取1号日期前面还有几个小li，用来漏出上个月的日期
+            var month = activeDate.getMonth();
+            title.innerHTML = activeDate.getFullYear() + "年" + (month + 1) + "月";
+            activeDate.setDate(diff); //设置活动日期为上个月漏出的第一个日期
+            var rAry = ["日", "一", "二", "三", "四", "五", "六"];
+            for (var i = 0; i < 7; i++) {
+                var rLi = document.createElement("li");
+                rLi.innerHTML = rAry[i];
+                rLi.style.background = "rgb(92, 190, 174)";
+                oUl.appendChild(rLi);
+
+            }
+            for (var i = 0; i < 42; i++) { //不断循环，创建小li，写入日期，添加到ul中，并且设置活动日期加一
+                var oLi = document.createElement("li");
+                var date = activeDate.getDate();
+                oLi.innerHTML = date;
+                //实现获取日期填入input中
+                oLi.dateValue = activeDate.getFullYear() + "-" + (activeDate.getMonth() + 1) + "-" + date;
+                oLi.onclick = function() {
+                    ele.value = this.dateValue;
+                    document.body.removeChild(calendar);
+                    calendar = null;
+                }
+
+                oUl.appendChild(oLi);
+                if (activeDate.getMonth() != month) {
+                    oLi.style.color = "#cccccc";
+                }
+                activeDate.setDate(date + 1);
+            }
+
+        }
+
+
+        //计算任意DOM元素距离文档的左或上的绝对偏移
+        function offset(ele) {
+            var p = ele.offsetParent,
+                l = ele.offsetLeft,
+                t = ele.offsetTop;
+            while (p) {
+                //判断IE8的方法
+                if (window.navigator.userAgent.indexOf("MISE 8") > -1) {
+                    l += p.offsetLeft;
+                    t += p.offsetTop;
+                } else {
+                    l += p.offsetLeft + p.clientLeft;
+                    t += p.offsetTop + p.clientTop;
+                }
+                p = p.offsetTop;
+            }
+
+            return {
+                left: l,
+                top: t
+            }
+        }
+    }
+</script>
+
+</html>

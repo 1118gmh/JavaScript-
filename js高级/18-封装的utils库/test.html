@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: blue;
+        }
+        
+        .small {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+        
+        .red {
+            color: red;
+        }
+        
+        .yellow {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <span class="span3"></span>
+    <span class="span1"></span>
+    <div class="box red" id="one">
+        <div class="red">
+            <div class="small red">这是一个小盒子</div>
+            <span></span>
+        </div>
+    </div>
+    <span class="span2"></span>
+</body>
+<script src="封装Tool库源码.js">
+</script>
+<script>
+    //测试getElementsByClassName
+    var tool = new Tool();
+    var one = document.getElementById("one");
+    var ary = tool.getElementsByClassName(one, "red");
+    console.log(ary);
+
+    //测试getEleChildren
+    var ary2 = tool.getEleChildren(one);
+    console.log(ary2); //[div.red]
+    //测试getFirst / getLast
+    console.log(tool.getFirst(one));
+    console.log(tool.getLast(one));
+    //测试getPre / getPres
+    console.log(tool.getPre(one));
+    console.log(tool.getPres(one));
+    //测试getNext / getNexts
+    console.log(tool.getNext(one));
+    console.log(tool.getNexts(one));
+    //测试getSibling / getSiblings
+    console.log(tool.getSibling(one));
+    console.log(tool.getSiblings(one));
+    //测试insertAfter
+    var ele = document.createElement("div");
+    tool.insertAfter(ele, one);
+    console.log(tool.getNext(one));
+
+    //测试setCss
+    tool.setCss(one, "backgroundColor", "yellow");
+    console.log(tool.setCss(one, "backgroundColor")); //"rgb(255, 255, 0)"
+    console.log(one.style.backgroundColor); //"yellow"
+    //测试setGroupCss
+    tool.setGroupCss(one, {
+        width: 200,
+        height: 200
+    });
+    //测试offset
+    console.log(tool.offset(one)); //{left: 8, top: 8}
+    //测试hasClassName / addClassName / removeClassName
+    console.log(tool.hasClassName(one, "box")); //true
+    tool.addClassName(one, "yellow");
+    console.log(tool.hasClassName(one, "yellow")); //true
+    tool.removeClassName(one, "yellow");
+    console.log(tool.hasClassName(one, "yellow")); //false
+
+    //测试toJSON
+    var jsonStr = JSON.stringify({
+        name: "xiaohui",
+        age: "22"
+    });
+    console.log(jsonStr); //{"name":"xiaohui","age":"22"}
+    var str = tool.toJSON(jsonStr);
+    console.log(str); //{name: "xiaohui", age: "22"}
+    //测试isType
+    console.log(tool.isType(1, "Number")); //true
+    console.log(tool.isType("1", "number")); //false
+
+    //测试removeRepeat
+    console.log([1, 2, 3, 2, 6, 3, 4, 1, 7].removeRepeat()); //[1, 2, 3, 7, 6, 4]
+    //测试forEachPro
+    var a = [1, 2, 3];
+    a.forEachPro((item, index) => {
+        console.log(item, index);
+    });
+    //测试myHasProperty
+    console.log([].myHasProperty("forEachPro")); //true
+    //测试myTrim
+    console.log("  xiaohui   ".myTrim()); //"xiaohui"
+    //测试mySub
+    console.log("xiaohui".mySub(4, true)); //xiao...
+    //测试myFormatTime
+    console.log("2020-1-30 18:50:30".myFormatTime("{0}年{1}月{2}日 {3}:{4}")); //2020年01月30日 18:50
+    //测试myQueryURLParams
+    console.log("http://www.zhufengpeixun.cn/?lx=1&from=wx#video".myQueryURLParams()); //{lx: undefined, from: undefined, HASH: "video"}
+    //测试millimeter
+    console.log("123456789".millimeter()); //123,456,789
+</script>
+
+</html>

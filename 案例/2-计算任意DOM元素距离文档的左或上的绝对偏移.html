@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #div1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid white;
+            background-color: red;
+            overflow: auto;
+        }
+        
+        #div2 {
+            width: 100px;
+            height: 100px;
+            border: 2px solid white;
+            background-color: blue;
+        }
+        
+        #div3 {
+            width: 50px;
+            height: 50px;
+            border: 3px solid white;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <div id="div1">
+            <div id="div2">
+                <div id="div3">
+                    123
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var box = document.querySelector("#div3");
+
+        var result = offset(box);
+        console.log(result);
+
+
+        //计算任意DOM元素距离文档的左或上的绝对偏移
+        function offset(ele) {
+            var p = ele.offsetParent,
+                l = ele.offsetLeft,
+                t = ele.offsetTop;
+            while (p) {
+                //判断IE8的方法
+                if (window.navigator.userAgent.indexOf("MISE 8") > -1) {
+                    l += p.offsetLeft;
+                    t += p.offsetTop;
+                } else {
+                    l += p.offsetLeft + p.clientLeft;
+                    t += p.offsetTop + p.clientTop;
+                }
+                p = p.offsetTop;
+            }
+
+            return {
+                left: l,
+                top: t
+            }
+        }
+    </script>
+</body>
+
+</html>

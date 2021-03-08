@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>动画移动</title>
+    <style>
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background: blue;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">Click Me</div>
+    <script>
+        var oDiv = document.getElementById("div1");
+        var target = {
+            left: 500,
+            width: 100,
+            height: 400,
+            opacity: 30,
+            background: 'blue'
+        };
+        oDiv.onclick = function() {
+            animate(oDiv, target, 5000, function() {
+                animate(oDiv, {
+                    left: 0
+                }, 10000, function() {
+                    setCss(this, 'background', 'red');
+                });
+            });
+        };
+
+        // function startMove(ele, json, fnEnd) {
+        //     var MAX = 18;
+        //     clearInterval(ele.timer); //在给当前元素设置新的动画之前，先清空原有正在运行的动画（防止动画共存）
+
+        //     ele.timer = window.setInterval(function() {
+        //         var booleanTarget = true;
+        //         for (var name in json) {
+        //             var iTarget = json[name];
+        //             if (name === "opacity") {
+        //                 var cur = Math.round(parseFloat(setCss(ele, name)) * 100);
+        //             } else if (name === "background") {
+        //                 var cur = json[name];
+        //             } else {
+        //                 var cur = parseInt(setCss(ele, name));
+        //             }
+
+        //             var speed = (iTarget - cur) / 5; //速度=（目标值-初始值）/一个数，减速
+        //             speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        //             if (Math.abs(speed) > MAX) {
+        //                 speed = speed > 0 ? MAX : -MAX;
+        //             }
+        //             if (name === "opacity") {
+        //                 ele.style.filter = 'alpha(opacity:' + (cur + speed) + ')'
+        //                 ele.style.opacity = (cur + speed) / 100;
+        //             } else if (name === "background") {
+        //                 ele.style[name] = cur;
+        //             } else {
+        //                 ele.style[name] = cur + speed + "px";
+        //             }
+        //             if (cur != iTarget) {
+        //                 booleanTarget = false;
+        //             }
+        //         }
+        //         if (booleanTarget) {
+        //             clearInterval(ele.timer);
+        //             if (typeof fnEnd === "function") {
+        //                 fnEnd();
+        //             }
+        //         }
+
+        //     }, 13);
+        // }
+
+
+        function animate(ele, target = {}, duration = 1000, callback = new Function('')) {
+            //计算change、begin
+            let change = {},
+                begin = {},
+                time = 0;
+            for (let attr in target) {
+                if (target.hasOwnProperty(attr)) {
+                    begin[attr] = setCss(ele, attr);
+                    change[attr] = target[attr] - begin[attr];
+                }
+            }
+            //清除上一个动画的执行
+            clearInterval(ele.animateTimer);
+            //执行动画
+            ele.animateTimer = setInterval(() => {
+                //时间间隔
+                time += 17;
+                //边界判断
+                if (time > duration) {
+                    setGroupCss(ele, target);
+                    clearInterval(ele.animateTimer);
+                    callback.call(ele); //动画完成之后执行回调函数,并且让this为当前操作元素本身
+                    return;
+                }
+                //获取当前位置
+                let cur = {};
+                for (let attr in target) {
+                    if (target.hasOwnProperty(attr)) {
+                        cur[attr] = time / duration * change[attr] + begin[attr];
+                    }
+                }
+                //设置元素样式为当前位置
+                setGroupCss(ele, cur);
+            }, 17);
+        }
+
+        function setCss(curEle, attr, value) { //设置CSS属性值和获取CSS；如果三个参数就是设置，2个参数就是获取；att是attribute的缩写；
+            if (typeof value === "undefined") { //如果有第三个参数，就是设置Css；如果没有就是获取Css；
+                var reg = /^(?:margin|padding|border|float|position|display|background|backgroundColor)$/;
+                var flag = "getElementsByClassName" in document;
+                var value = flag ? window.getComputedStyle(curEle, null)[attr] : curEle.currentStyle[attr];
+                return !reg.test(attr) ? parseFloat(value) : value;
+            } else {
+                switch (attr) {
+                    case "opacity":
+                        curEle["style"][attr] = value;
+                        curEle["style"]["filter"] = "alpha(opacity=" + (value * 100) + ")";
+                        break;
+                    case "zIndex":
+                        curEle["style"][attr] = value;
+                        break;
+                    default:
+                        curEle["style"][attr] = !isNaN(value) ? value += "px" : value;
+                }
+            }
+        };
+
+        function setGroupCss(curEle, cssObj) {
+            for (var key in cssObj) {
+                setCss(curEle, key, cssObj[key]);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -45,7 +45,23 @@
      console.log(i);//=>Uncaught ReferenceError: i is not defined
      ```
 
-     
+
+   ```js
+   //例题
+   /*
+    *首先词法分析（不是变量提升）
+    *let n
+    *	（1）当前变量n是块级作用域的私有变量（表示只在当前作用域中可以使用）
+    *	（2）n是基于ES6规范创建的（不会进行变量提升）
+    */
+   let n = 10; //window下没有n这个属性
+   if(!('n' in window)){
+       let n = n +30;//（没有变量提升）赋值操作先准备值，然后再声明变量，再给变量赋值。先处理n+30，在声明n，再赋值。但是在n+30执行的时候，此时块级作用域中还没有n，所以报错
+   }
+   console.log(n);
+   ```
+
+   
 
 2. **箭头函数及this问题**
 
@@ -297,19 +313,17 @@
        constructor(){
            this.x = 100;
        }
-       //直接写的方法就是加在原型上的 === Fnprototype.getX...
+       //直接写的方法就是加在原型上的 === Fnprototype.getX...（只能设置方法，不能设置属性）
        getX (){
            console.log(this.x);
        }
-       //给实例设置私有属性
-       y = 200;
-       //前面设置static的：把当前Fn当做普通对象设置的键值对
+       //前面设置static的：把当前Fn当做普通对象设置的键值对（只能设置方法，不能设置属性）
        static queryX(){}
-       static y = 200;
    }
    //也可以在外面给原型上添加方法
    Fn.prototype.getY = function(){};
-   Fn.z = 300;
+   Fn.z = 300; //给Fn对象设置属性
+   Fn.prototype.y = 200; //给Fn的原型设置属性
    
    let f = new Fn(10,20);
    f.getX();
@@ -317,6 +331,33 @@
    
    Fn();//=>VM40:2 Uncaught TypeError: Class constructor Fn cannot be invoked without 'new'=>class创建的类不能当做普通函数执行
    ```
+
+   **类的继承**
+
+   ```js
+   class A{
+       constructor(){
+           this.x = x;
+       }
+       getX(){
+           console.log(this.x);
+       }
+       
+   }
+   class B extends A{ //=>类似于原型继承
+       constructor(){
+           super(); //类似于call继承
+           this.y = 200;
+       }
+       getY(){
+           console.log(this.y);
+       }
+   }
+   let b= new B();
+   b.getY();
+   ```
+
+   
 
    **类的编译**
 
@@ -399,6 +440,8 @@
 
 6. **ES6中的模板字符串**
 
+   > ES6中模板字符串的${}中存放的是JS表达式，但是表达式要有结果，将结果拼接到字符串中
+
    ```js
    let year = '2019',
        mouth = '08',
@@ -426,7 +469,7 @@
    >
    > - 回调地狱，代码难以维护	第一个的输出是第二个的输入
    >
-   >   解决：Promise链式调
+   >   解决：Promise链式调用
    >
    > - promise可以支持多个并发的请求，获取并发请求中的数据
    >
@@ -447,7 +490,7 @@
    >   每一个promise的实例上都有一个then方法，then方法中有两个参数，一个参数叫成功的函数，另一个叫失败的函数
    >   
    >   promise中发生错误，就会 执行失败态
-   
+
    ```js
    //Promise只有一个参数，叫excutor执行器（带resolve和reject两个参数的函数），默认new是就会调用
    let p = new Promise((resolve,reject)=>{
@@ -463,7 +506,7 @@
           });
    // value 买
    ```
-   
+
    ```js
    //一个promise的实例可以then多次
    p.then(value=>{
@@ -477,7 +520,7 @@
    });
    //=>买	买	买
    ```
-   
+
    ```js
    //Promise.all方法调用或会返回一个新的promise
    Promise.all([read('1.txt'),read('2.txt')]).then([r1,r2]=>{
@@ -500,6 +543,8 @@
        console.log(data);
    });//123
    ```
-   
-   
+
+8. interator（for of循环）
+
+9. Map / Set
 

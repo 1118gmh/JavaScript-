@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>多张图片的延迟加载</title>
+    <style>
+        .container {
+            margin: 20px auto;
+            width: 1000px;
+        }
+        
+        .container .imgBox {
+            margin-bottom: 20px;
+            height: 300px;
+            background: url("img/default.jpg") no-repeat center center #EEE;
+        }
+        
+        .container .imgBox img {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="imgBox">
+            <img src="" alt="" data-src="">
+        </div> -->
+    </div>
+    <script src="jQuery.js"></script>
+    <!-- <script>
+        $(function() {
+            let $container = $('.container'),
+                $imgList = null;
+            //1. 先绑定数据
+            let bindHTML = () => {
+                let str = ``;
+                for (let i = 0; i < 100; i++) {
+                    str += `<div class="imgBox">
+            <img src="" alt="" data-src="img/${Math.round(Math.random()*2+1)}.jpg">
+        </div>`;
+                }
+                $container.html(str);
+                $imgList = $container.find('img');
+            };
+            //2. 加载真实图片
+            //lazyImg：单张图片的加载
+            let lazyImg = curImg => {
+                let $curImg = $(curImg),
+                    trueImg = $curImg.attr('data-src');
+                let tempImg = new Image();
+                tempImg.onload = function() {
+                    //无动画
+                    // $curImg.attr('src', trueImg).css({
+                    //     display: 'block'
+                    // });
+                    //有动画
+                    $curImg.attr('src', trueImg)
+                        .stop().fadeIn(300); //结束当前正在运行的动画，执行fadeIn，让图片300ms内渐现出来
+                    tempImg = null;
+                    curImg.isLoad = true; //优化处理：图片加载之后防止图片的再次加载
+                };
+                tempImg.src = trueImg;
+
+            };
+
+            //conputedImg:计算哪张图片可以加载了
+            let computedImg = () => {
+                $imgList.each((index, curImg) => {
+                    //A:当前图片底边的上偏移
+                    //B:当前浏览器底边的上偏移
+                    let $curImg = $(curImg),
+                        $imgBox = $curImg.parent(),
+                        A = $imgBox.offset().top + $imgBox.outerHeight(),
+                        B = document.documentElement.scrollTop + document.documentElement.clientHeight;
+                    if (A < B) {
+                        if (curImg.isLoad) {
+                            return;
+                        }
+                        lazyImg(curImg);
+                    }
+                });
+
+            };
+            bindHTML();
+            $(window).on('load scroll', computedImg);
+
+        });
+    </script> -->
+
+
+    <script>
+        $(function() {
+            let $container = $(".container"),
+                $imgList = null;
+            //1. 绑定数据
+            let bindHTML = () => {
+                let str = ``;
+                for (let i = 0; i < 100; i++) {
+                    str += `<div class="imgBox">
+            <img src="" alt="" data-src="img/${Math.round(Math.random()*2+1)}.jpg">
+        </div>`;
+                }
+                $(str).appendTo($container);
+                $imgList = $container.find('img');
+
+            };
+            //2. 加载真实图片
+            //  - 实现单张图片的加载
+            let lazyImg = curImg => {
+                let $curImg = $(curImg),
+                    trueImgSrc = $curImg.attr('data-src'),
+                    tempImg = new Image();
+                tempImg.onload = () => {
+                    $curImg.attr('src', trueImgSrc);
+                    $curImg.css('display', 'block');
+                    curImg.isLoad = true;
+                    tempImg = null;
+                };
+                tempImg.src = trueImgSrc;
+
+
+            };
+            //  - 页面加载完成或滚动时加载单张图片
+            let scrollBottom = () => {
+                $(window).on('load scroll', () => {
+                    $imgList.each((index, curImg) => {
+                        let $curImg = $(curImg),
+                            $imgBox = $curImg.parent(),
+                            A = document.documentElement.clientHeight + document.documentElement.scrollTop,
+                            B = $imgBox.outerHeight() + $imgBox.offset().top;
+                        if (A > B) {
+                            if (curImg.isLoad) {
+                                return;
+                            }
+                            lazyImg(curImg);
+                        }
+                    });
+                });
+            };
+            bindHTML();
+            scrollBottom();
+
+
+        });
+    </script>
+</body>
+
+</html>

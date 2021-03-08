@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>选项卡</title>
+    <link rel="stylesheet" href="css/baseCss.css">
+    <style>
+        .tabBox {
+            margin: 20px auto;
+            width: 360px;
+        }
+        
+        .tabBox .option {
+            height: 34px;
+            border: 1px solid #ccc;
+            background: #eee;
+        }
+        
+        .tabBox .option li {
+            float: left;
+            padding: 0 12px;
+            height: 34px;
+            line-height: 34px;
+        }
+        
+        .tabBox .option li a {
+            display: block;
+            color: #000;
+            font-size: 14px;
+        }
+        
+        .tabBox .option li.active {
+            border-top: 3px solid #FF8400;
+            height: 35px;
+            line-height: 32px;
+            margin-top: -1px;
+            background: white;
+        }
+        
+        .tabBox .con {
+            display: none;
+            height: 220px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .tabBox .con.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tabBox" id="tabBox">
+        <ul class="option">
+            <li class="active"><a href="#">图片</a></li>
+            <li><a href="#">专栏</a></li>
+            <li><a href="#">热点</a></li>
+
+        </ul>
+        <div class="con active">1</div>
+        <div class="con">2</div>
+        <div class="con">3</div>
+
+    </div>
+    <!-- <script src="js/tab.js"></script> -->
+    <script src="js/tabPlugin.js"></script>
+    <script>
+        new TabPlugin('#tabBox', {
+            lastIndex: 2,
+            eventType: 'click',
+            changeEnd: function(curLi, curContent, index, lastIndex) {
+                // curLi.style.background = 'red';
+            }
+        });
+    </script>
+</body>
+
+</html>

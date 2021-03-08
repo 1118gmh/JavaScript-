@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>商品排序</title>
+    <link rel="stylesheet" href="css/baseCss.css">
+    <style>
+        .shop-content .header {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            background: rgb(182, 207, 219);
+            padding-left: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        
+        .shop-content .header a {
+            height: 100%;
+            border: 1px solid #ccc;
+            margin-left: 20px;
+        }
+        
+        .shop-content ul {
+            position: absolute;
+            width: 1200px;
+        }
+        
+        .shop-content ul li {
+            float: left;
+            width: 234px;
+            background-color: rgb(210, 222, 230);
+            border-top: 1px solid orange;
+            height: 340px;
+            margin: 10px;
+            padding: 10px;
+        }
+        
+        .shop-content ul li h4,
+        p {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .shop-content ul li img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="shop-content">
+        <div class="header">
+            <span id="px">排序:</span>
+            <!-- 项目中按钮用a标签做 -->
+            <a href="javascript:;">上架时间</a>
+            <a href="javascript:;">价格</a>
+            <a href="javascript:;">热度</a>
+        </div>
+        <ul id="list">
+        </ul>
+    </div>
+</body>
+<script src="js/utils.js"></script>
+<script src="js/index2.js"></script>
+
+
+</html>

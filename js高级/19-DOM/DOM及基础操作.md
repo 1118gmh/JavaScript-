@@ -492,96 +492,37 @@ console.log(document);
 > >
 > > console.log([ELEMENT].style.xxx);  //获取的是当前元素写在行内上的样式
 
-##### JS盒子模型属性
+### 属性操作
 
-> 基于一些属性和方法，让我们能够获取到当前元素的样式信息，例如：clientWidth、offsetWidth等
->
-> 注意：13个属性中，只有scrollTop和scrollleft”可读写“，其余”只读“；
->
-> 属性：
->
-> - client
->
->   - width / height：可视化区域宽高（内容宽度+左右padding）
->   - top / left：获取盒子上边框和左gg的大小
->
-> - offset
->
->   - width/height：在client的基础上加上border == 盒子本身宽高
->   - top/left
->   - parent
->
-> - scroll
->
->   - width/height：
->
->     ​		在没有内容溢出的情况下，获取的结果和client一样；
->
->     ​		在有内容溢出的情况下，获取的结果约等于真实内容的宽高（上/左padding + 真实内容的宽度/高度）
->
->     ​		//1、不同浏览器获取的结果不同
->
->     ​		//2、overflow属性值对最后的结果会产生一定的影响
->
->   - top/left：竖向/横向滚动条卷曲的高度/宽度
->
->     ​		min = 0     max = 整个的高度scrollHeight - 一屏幕高度clientHeight
->
-> 方法：window.getComputedStyle([ELEMENT],[伪类]) / [ELEMENT].currentStyle
+> HTML 元素包括标签名和若干个键值对，这个键值对就称为“属性”（attribute）。
 
-> 传统的CSS盒子模型属性：内容的宽高width/height、内填充padding-top/-right/-bottom/-left、边框border、外边框margin
->
-> 盒子宽度：width+左右padding+左右border
->
-> CSS3中新盒子模型属性：
->
-> ​			box-sizing:content-box（默认传统盒子模型）
->
-> ​			border-box（新盒子模型）（宽高即为盒子最后的大小）
+- Element.attributes属性
+
+  > 元素对象有一个`attributes`属性，返回一个类似数组的动态对象，成员是该元素标签的所有属性节点对象，属性的实时变化都会反映在这个节点对象上。
+
+> HTML 元素的标准属性（即在标准中定义的属性），会自动成为元素节点对象的属性。
 
 ```js
-let box = document.getElementById('box');
-//获取盒子可视化宽高（内容看宽度+左右padding）
-//1.内容溢出与否对他无影响
-//2.获取结果无单位
-//3.获取结果是整数，四舍五入
-console.log(box.clientwidth);
-console.log(box.clientheight);
-//获取当前页面一屏幕的区域的宽高
-let winW = document.documentElement.clientWidth;//一屏幕宽
-let winH = document.documentElement.clientHeight;//一屏幕高
-//css实现盒子居中：1.margin；2、position；3、flex；4、transform
-//js实现盒子居中：（一屏幕的宽度-盒子的宽度）/2
-box.style.position = 'absolute';
-box.style.left = (winW-300)/2 + 'px';
-box.style.top = (winH-300)/2 + 'px';
+var a = document.getElementById('test');
+a.id // "test"
+a.href // "http://www.example.com/"
 ```
 
-### CSS操作
-
-> 操作 CSS 样式最简单的方法，就是使用网页元素节点的`getAttribute()`方法、`setAttribute()`方法和`removeAttribute()`方法，直接读写或删除网页元素的`style`属性。
+> 这些属性都是可写的。
 
 ```js
-div.setAttribute(
-  'style',
-  'background-color:red;' + 'border:1px solid black;'
-);
+var img = document.getElementById('myImage');
+img.src = 'http://www.example.com/image.jpg';
 ```
 
-上面的代码相当于下面的 HTML 代码。
+> 元素节点提供六个方法，用来操作属性
 
-```html
-<div style="background-color:red; border:1px solid black;" />
-```
-
-`style`不仅可以使用字符串读写，它本身还是一个对象，部署了 CSSStyleDeclaration 接口（详见下面的介绍），可以直接读写个别属性。
-
-```js
-e.style.fontSize = '18px';
-e.style.color = 'black';
-```
-
-详情参考：https://wangdoc.com/javascript/dom/css.html
+- `getAttribute()`：返回当前元素节点的指定属性。
+- `getAttributeNames()`：返回一个数组，成员是当前元素的所有属性的名字。
+- `setAttribute()`：为当前元素节点新增属性。
+- `hasAttribute()`：返回一个布尔值，表示当前元素节点是否包含指定属性。
+- `hasAttributes()`：返回一个布尔值，表示当前元素是否有属性，如果没有任何属性，就返回`false`，否则返回`true`。
+- `removeAttribute()`：移除指定属性。该方法没有返回值
 
 ### **Text节点**
 
@@ -636,10 +577,6 @@ e.style.color = 'black';
 > 
 > console.log(“childNodes的长度：”+ele.childNodes.length+“,第一个节点值是”+ele.firstChild.nodeValue);//childNodes的长度：2,第一个节点值是**hello** word var newNode=ele.firstChild.splitText(2);  console.log(ele.childNodes.length);//2  console.log(ele.firstChild.nodeValue);//he  console.log(newNode.nodeValue);//llo word
 > ```
-
-
-
-
 
 
 
